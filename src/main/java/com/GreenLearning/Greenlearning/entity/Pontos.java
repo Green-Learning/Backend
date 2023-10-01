@@ -10,7 +10,6 @@ import lombok.Setter;
 @NoArgsConstructor
 public class Pontos extends AbstractEntity{
 
-
     @Getter @Setter
     @ManyToOne
     @JoinColumn(name = "id_aluno")

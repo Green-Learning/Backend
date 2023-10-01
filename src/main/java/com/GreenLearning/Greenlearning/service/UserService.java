@@ -10,13 +10,12 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.UUID;
 
 @Service
 public class UserService {
 
     @Autowired
-    private UserRepository repository;
+    public UserRepository repository;
 
     @Transactional
     public User cadastrar(UserDTO userDTO){
@@ -32,6 +31,7 @@ public class UserService {
         Optional<User> user = repository.findById(id);
         if(!user.isPresent()){
             throw new RuntimeException("não foi possivel localizar o user informado!");
+            
         } else {
             return user.get();
         }
@@ -40,6 +40,7 @@ public class UserService {
     public List<User> listar() {
         if (repository.findAll().isEmpty()) {
             throw new RuntimeException("não foi possivel localizar nenhum usuario cadastrado!");
+
         } else {
             return repository.findAll();
         }

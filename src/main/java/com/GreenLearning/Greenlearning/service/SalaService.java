@@ -10,13 +10,12 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.UUID;
 
 @Service
 public class SalaService {
 
     @Autowired
-    private SalaRepository repository;
+    public SalaRepository repository;
 
     @Transactional
     public Sala cadastrar(SalaDTO salaDTO){
@@ -31,6 +30,7 @@ public class SalaService {
         Optional<Sala> sala = repository.findById(id);
         if (!sala.isPresent()) {
             throw new RuntimeException("não foi possivel localizar a sala informada!");
+
         } else {
             return sala.get();
         }
@@ -39,6 +39,7 @@ public class SalaService {
     public List<Sala> listar() {
         if (repository.findAll().isEmpty()) {
             throw new RuntimeException("não foi possivel localizar nenhuma sala cadastrada!");
+
         } else {
             return repository.findAll();
         }

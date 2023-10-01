@@ -10,13 +10,12 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.UUID;
 
 @Service
 public class PontosService {
 
     @Autowired
-    private PontosRepository repository;
+    public PontosRepository repository;
 
     @Transactional
     public Pontos cadastrar(PontosDTO pontosDTO){
@@ -31,6 +30,7 @@ public class PontosService {
         Optional<Pontos> pontos = repository.findById(id);
         if (!pontos.isPresent()) {
             throw new RuntimeException("não foi possivel acessar a pontuação informada!");
+
         } else {
             return pontos.get();
         }
@@ -39,6 +39,7 @@ public class PontosService {
     public List<Pontos> listar() {
         if (repository.findAll().isEmpty()) {
             throw new RuntimeException("não foi possivel localizar nenhum historio de pontuação cadastrado no banco!");
+
         } else {
             return repository.findAll();
         }
@@ -50,6 +51,7 @@ public class PontosService {
 
         if (!pontos.getId().equals(pontosNovo.getId())) {
             throw new RuntimeException("Não foi possivel localizar o historico de pontos informado!");
+
         }
 
         pontos.setScore(pontosNovo.getScore());

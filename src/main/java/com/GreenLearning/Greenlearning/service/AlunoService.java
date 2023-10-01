@@ -10,13 +10,12 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.UUID;
 
 @Service
 public class AlunoService {
 
     @Autowired
-    private AlunoRepository repository;
+    public AlunoRepository repository;
 
     @Transactional
     public Aluno cadastrar(AlunoDTO alunoDTO){
@@ -31,14 +30,15 @@ public class AlunoService {
         Optional<Aluno> alunoOptional = repository.findById(id);
         if (!alunoOptional.isPresent()){
             throw new RuntimeException("Aluno informado não foi localizado!");
-        }
 
+        }
         return alunoOptional.get();
     }
 
     public List<Aluno> listar(){
         if (repository.findAll().isEmpty()){
             throw new RuntimeException("não foi possivel localizar nenhum aluno cadastrado!");
+
         } else {
             return repository.findAll();
         }
@@ -60,9 +60,9 @@ public class AlunoService {
 
     @Transactional
     public void delete(Long id){
-        Optional<Aluno> aluno = repository.findById(id);
+        Aluno aluno = this.buscarPorId(id);
 
-        repository.delete(aluno.get());
+        repository.delete(aluno);
     }
 }
 

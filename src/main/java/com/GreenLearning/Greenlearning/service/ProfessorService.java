@@ -10,13 +10,12 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.UUID;
 
 @Service
 public class ProfessorService {
 
     @Autowired
-    private ProfessorRepository repository;
+    public ProfessorRepository repository;
 
     @Transactional
     public Professor cadastrar(ProfessorDTO professorDTO) {
@@ -31,6 +30,7 @@ public class ProfessorService {
         Optional<Professor> professor = repository.findById(id);
         if (!professor.isPresent()) {
             throw new RuntimeException("Professor informado não foi localizado!");
+
         } else {
             return professor.get();
         }
@@ -39,6 +39,7 @@ public class ProfessorService {
     public List<Professor> listar() {
         if (repository.findAll().isEmpty()) {
             throw new RuntimeException("não foi possivel localizar nenhum professor cadastrado!");
+
         } else {
             return repository.findAll();
         }
