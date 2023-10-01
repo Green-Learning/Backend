@@ -17,4 +17,10 @@ public class UserDTO extends AbstractEntityDTO{
     @NotBlank(message = "Preencha o campo senha!")
     @Size(max = 50, message = "Senha deve conter até 50 caracteres!")
     private String senha;
+
+    public UserDTO(Long id, String email, String senha) {
+        super(id);
+        this.email = email;
+        this.senha = senha;
+    }
 }

@@ -9,15 +9,19 @@ import lombok.Setter;
 
 @Entity
 @Table(name = "tb_user")
+@Getter @Setter
 @NoArgsConstructor
 public class User extends AbstractEntity{
 
-    @Getter @Setter
     @Column(name = "email")
     private String email;
 
-    @Getter @Setter
     @Column(name = "senha")
     private String senha;
 
+    public User(Long id, String email, String senha) {
+        super(id);
+        this.email = email;
+        this.senha = senha;
+    }
 }

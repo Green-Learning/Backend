@@ -20,4 +20,11 @@ public class AlunoDTO extends AbstractEntityDTO {
 
     @Getter @Setter
     private Sala sala;
+
+    public AlunoDTO(Long id, String nome, Integer idade, Sala sala) {
+        super(id);
+        this.nome = nome;
+        this.idade = idade;
+        this.sala = sala;
+    }
 }

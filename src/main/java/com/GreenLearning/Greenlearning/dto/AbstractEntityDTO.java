@@ -16,4 +16,7 @@ public abstract class AbstractEntityDTO {
     @Getter @Setter
     private LocalDateTime edicao;
 
+    public AbstractEntityDTO(Long id) {
+        this.id = id;
+    }
 }

@@ -20,7 +20,7 @@ public class UserController {
     public UserService service;
 
     @PostMapping
-    private ResponseEntity<User> cadastrar(@Valid @RequestBody final UserDTO userDTO){
+    public ResponseEntity<User> cadastrar(@Valid @RequestBody final UserDTO userDTO){
         try {
             return ResponseEntity.status(HttpStatus.CREATED).body(service.cadastrar(userDTO));
 
@@ -30,7 +30,7 @@ public class UserController {
     }
 
     @GetMapping(value = "/buscar")
-    private ResponseEntity<User> buscarPorId(@RequestParam("id") final Long id){
+    public ResponseEntity<User> buscarPorId(@RequestParam("id") final Long id){
         try {
             return ResponseEntity.status(HttpStatus.OK).body(service.buscarPorId(id));
 
@@ -40,7 +40,7 @@ public class UserController {
     }
 
     @GetMapping(value = "/listar")
-    private ResponseEntity<List<User>> listar(){
+    public ResponseEntity<List<User>> listar(){
         try {
             return ResponseEntity.status(HttpStatus.OK).body(service.listar());
 
@@ -50,7 +50,7 @@ public class UserController {
     }
 
     @PutMapping(value = "/editar")
-    private ResponseEntity<User> editar(@RequestParam("id") final Long id, @Valid @RequestBody final UserDTO userNovo){
+    public ResponseEntity<User> editar(@RequestParam("id") final Long id, @Valid @RequestBody final UserDTO userNovo){
         try {
             return ResponseEntity.status(HttpStatus.OK).body(service.editar(id,userNovo));
 

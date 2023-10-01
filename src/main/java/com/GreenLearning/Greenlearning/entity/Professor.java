@@ -8,14 +8,19 @@ import lombok.Setter;
 @Entity
 @Table(name = "tb_professor")
 @NoArgsConstructor
+@Getter @Setter
 public class Professor extends AbstractEntity{
 
-    @Getter @Setter
     @OneToOne
     @JoinColumn(name = "user_id")
     private User usuario;
 
-    @Getter @Setter
     @Column(name = "nome")
     private String nome;
+
+    public Professor(Long id, User usuario, String nome) {
+        super(id);
+        this.usuario = usuario;
+        this.nome = nome;
+    }
 }

@@ -15,4 +15,10 @@ public class SalaDTO extends AbstractEntityDTO{
 
     @Getter @Setter
     private Professor professor;
+
+    public SalaDTO(Long id, String nome, Professor professor) {
+        super(id);
+        this.nome = nome;
+        this.professor = professor;
+    }
 }

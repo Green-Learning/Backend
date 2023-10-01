@@ -19,4 +19,10 @@ public class ProfessorDTO extends AbstractEntityDTO{
     @NotBlank(message = "Nome é um campo obrigatorio!")
     @Size(min = 3, max = 80, message = "Nome deve conter de 3 a 80 caracteres!")
     private String nome;
+
+    public ProfessorDTO(Long id, User usuario, String nome) {
+        super(id);
+        this.usuario = usuario;
+        this.nome = nome;
+    }
 }

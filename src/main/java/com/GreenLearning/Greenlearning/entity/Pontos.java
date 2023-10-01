@@ -8,22 +8,27 @@ import lombok.Setter;
 @Entity
 @Table(name = "tb_pontos")
 @NoArgsConstructor
+@Getter @Setter
 public class Pontos extends AbstractEntity{
 
-    @Getter @Setter
     @ManyToOne
     @JoinColumn(name = "id_aluno")
     private Aluno aluno;
 
-    @Getter @Setter
     @Column(name = "jogo")
     private String jogo;
 
-    @Getter @Setter
     @Column(name = "score")
     private Integer score;
 
-    @Getter @Setter
     @Column(name = "pontuacao_maior")
     private boolean maior;
+
+    public Pontos(Long id, Aluno aluno, String jogo, Integer score, boolean maior) {
+        super(id);
+        this.aluno = aluno;
+        this.jogo = jogo;
+        this.score = score;
+        this.maior = maior;
+    }
 }

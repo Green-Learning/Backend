@@ -7,15 +7,21 @@ import lombok.Setter;
 
 @Entity
 @Table(name = "tb_sala")
+@Getter @Setter
 @NoArgsConstructor
 public class Sala extends AbstractEntity{
 
-    @Getter @Setter
+
     @Column(name = "nome")
     private String nome;
 
-    @Getter @Setter
     @ManyToOne
     @JoinColumn(name = "id_professor")
     private Professor professor;
+
+    public Sala(Long id, String nome, Professor professor) {
+        super(id);
+        this.nome = nome;
+        this.professor = professor;
+    }
 }

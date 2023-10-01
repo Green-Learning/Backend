@@ -17,4 +17,12 @@ public class PontosDTO extends AbstractEntityDTO{
 
     @Getter @Setter
     private Boolean maior;
+
+    public PontosDTO(Long id, Aluno aluno, String jogo, Integer score, Boolean maior) {
+        super(id);
+        this.aluno = aluno;
+        this.jogo = jogo;
+        this.score = score;
+        this.maior = maior;
+    }
 }
