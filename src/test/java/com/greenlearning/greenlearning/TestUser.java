@@ -1,10 +1,10 @@
-package com.GreenLearning.greenlearning;
+package com.greenlearning.greenlearning;
 
-import com.GreenLearning.greenlearning.controller.UserController;
-import com.GreenLearning.greenlearning.dto.UserDTO;
-import com.GreenLearning.greenlearning.entity.User;
-import com.GreenLearning.greenlearning.repository.UserRepository;
-import com.GreenLearning.greenlearning.service.UserService;
+import com.greenlearning.greenlearning.controller.UserController;
+import com.greenlearning.greenlearning.dto.UserDTO;
+import com.greenlearning.greenlearning.entity.User;
+import com.greenlearning.greenlearning.repository.UserRepository;
+import com.greenlearning.greenlearning.service.UserService;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;

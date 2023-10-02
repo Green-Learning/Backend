@@ -1,13 +1,14 @@
-package com.GreenLearning.greenlearning.service;
+package com.greenlearning.greenlearning.service;
 
-import com.GreenLearning.greenlearning.dto.AlunoDTO;
-import com.GreenLearning.greenlearning.entity.Aluno;
-import com.GreenLearning.greenlearning.repository.AlunoRepository;
+import com.greenlearning.greenlearning.dto.AlunoDTO;
+import com.greenlearning.greenlearning.entity.Aluno;
+import com.greenlearning.greenlearning.repository.AlunoRepository;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
+import org.webjars.NotFoundException;
 
 import java.util.List;
 import java.util.Optional;
@@ -29,18 +30,18 @@ public class AlunoService {
 
     public Aluno buscarPorId(Long id){
         Optional<Aluno> alunoOptional = repository.findById(id);
-        /*
-        if (!alunoOptional.isPresent()){
-            throw new RuntimeException("Aluno informado não foi localizado!");
+
+        if(alunoOptional.isEmpty()){
+            Assert.isTrue(alunoOptional.isEmpty(), "Aluno informado nao foi localizado!");
+            throw new NotFoundException("erro!!!");
         }
-        */
-        Assert.isTrue(alunoOptional.isEmpty(), "Aluno informado nao foi localizado!");
         return alunoOptional.get();
     }
 
     public List<Aluno> listar(){
 
-        Assert.isTrue(repository.findAll().isEmpty(), "não foi possivel localizar nenhum aluno cadastrado!");
+        List<Aluno> alunos = repository.findAll();
+        Assert.isTrue(alunos !=null, "não foi possivel localizar nenhum aluno cadastrado!");
         /*
         if (repository.findAll().isEmpty()){
             throw new RuntimeException("não foi possivel localizar nenhum aluno cadastrado!");
@@ -56,11 +57,11 @@ public class AlunoService {
     @Transactional
     public Aluno editar(Long id, AlunoDTO alunoNovo){
         Aluno aluno = this.buscarPorId(id);
-
-       /* if (!aluno.getId().equals(alunoNovo.getId())) {
+        /*
+        if (!aluno.getId().equals(alunoNovo.getId())) {
             throw new RuntimeException("Não foi possivel localizar o aluno informado!");
-        }
-        */
+        }*/
+
 
         Assert.isTrue(aluno !=null,"Não foi possivel localizar o aluno informado!");
 

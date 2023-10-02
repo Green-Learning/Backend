@@ -1,6 +1,6 @@
-package com.GreenLearning.greenlearning.repository;
+package com.greenlearning.greenlearning.repository;
 
-import com.GreenLearning.greenlearning.entity.Sala;
+import com.greenlearning.greenlearning.entity.Sala;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface SalaRepository extends JpaRepository<Sala, Long> {
