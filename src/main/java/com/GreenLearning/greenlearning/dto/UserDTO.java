@@ -1,4 +1,4 @@
-package com.greenlearning.greenlearning.dto;
+package com.greenLearning.greenlearning.dto;
 
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;

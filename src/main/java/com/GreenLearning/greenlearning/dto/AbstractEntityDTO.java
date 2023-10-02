@@ -1,4 +1,4 @@
-package com.greenlearning.greenlearning.dto;
+package com.greenLearning.greenlearning.dto;
 
 import lombok.Getter;
 import lombok.Setter;

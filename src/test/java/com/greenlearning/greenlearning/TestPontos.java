@@ -1,10 +1,10 @@
 package com.greenlearning.greenlearning;
 
-import com.greenlearning.greenlearning.controller.PontosController;
-import com.greenlearning.greenlearning.dto.PontosDTO;
-import com.greenlearning.greenlearning.entity.*;
-import com.greenlearning.greenlearning.repository.PontosRepository;
-import com.greenlearning.greenlearning.service.PontosService;
+import com.greenLearning.greenlearning.controller.PontosController;
+import com.greenLearning.greenlearning.dto.PontosDTO;
+import com.greenLearning.greenlearning.entity.*;
+import com.greenLearning.greenlearning.repository.PontosRepository;
+import com.greenLearning.greenlearning.service.PontosService;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;

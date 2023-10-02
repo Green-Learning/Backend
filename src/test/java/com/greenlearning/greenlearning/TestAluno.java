@@ -1,13 +1,13 @@
 package com.greenlearning.greenlearning;
 
-import com.greenlearning.greenlearning.controller.AlunoController;
-import com.greenlearning.greenlearning.dto.AlunoDTO;
-import com.greenlearning.greenlearning.entity.Aluno;
-import com.greenlearning.greenlearning.entity.Professor;
-import com.greenlearning.greenlearning.entity.Sala;
-import com.greenlearning.greenlearning.entity.User;
-import com.greenlearning.greenlearning.repository.AlunoRepository;
-import com.greenlearning.greenlearning.service.AlunoService;
+import com.greenLearning.greenlearning.controller.AlunoController;
+import com.greenLearning.greenlearning.dto.AlunoDTO;
+import com.greenLearning.greenlearning.entity.Aluno;
+import com.greenLearning.greenlearning.entity.Professor;
+import com.greenLearning.greenlearning.entity.Sala;
+import com.greenLearning.greenlearning.entity.User;
+import com.greenLearning.greenlearning.repository.AlunoRepository;
+import com.greenLearning.greenlearning.service.AlunoService;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -144,3 +144,4 @@ class TestAluno {
 	}
 
 }
+q

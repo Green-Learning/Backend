@@ -1,12 +1,12 @@
 package com.greenlearning.greenlearning;
 
-import com.greenlearning.greenlearning.controller.SalaController;
-import com.greenlearning.greenlearning.dto.SalaDTO;
-import com.greenlearning.greenlearning.entity.Professor;
-import com.greenlearning.greenlearning.entity.Sala;
-import com.greenlearning.greenlearning.entity.User;
-import com.greenlearning.greenlearning.repository.SalaRepository;
-import com.greenlearning.greenlearning.service.SalaService;
+import com.greenLearning.greenlearning.controller.SalaController;
+import com.greenLearning.greenlearning.dto.SalaDTO;
+import com.greenLearning.greenlearning.entity.Professor;
+import com.greenLearning.greenlearning.entity.Sala;
+import com.greenLearning.greenlearning.entity.User;
+import com.greenLearning.greenlearning.repository.SalaRepository;
+import com.greenLearning.greenlearning.service.SalaService;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
