@@ -1,6 +1,6 @@
-package com.greenlearning.greenlearning.dto;
+package com.greenLearning.greenlearning.dto;
 
-import com.greenlearning.greenlearning.entity.Professor;
+import com.greenLearning.greenlearning.entity.Professor;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 import lombok.Getter;

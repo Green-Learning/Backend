@@ -1,6 +1,6 @@
-package com.greenlearning.greenlearning.dto;
+package com.greenLearning.greenlearning.dto;
 
-import com.greenlearning.greenlearning.entity.Sala;
+import com.greenLearning.greenlearning.entity.Sala;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;

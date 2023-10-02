@@ -1,4 +1,4 @@
-package com.greenlearning.greenlearning.entity;
+package com.greenLearning.greenlearning.entity;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;

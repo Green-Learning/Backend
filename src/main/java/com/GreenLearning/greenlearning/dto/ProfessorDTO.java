@@ -1,6 +1,6 @@
-package com.greenlearning.greenlearning.dto;
+package com.greenLearning.greenlearning.dto;
 
-import com.greenlearning.greenlearning.entity.User;
+import com.greenLearning.greenlearning.entity.User;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.OneToOne;
 import jakarta.validation.constraints.NotBlank;

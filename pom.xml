@@ -9,12 +9,12 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>com.GreenLearning</groupId>
-	<artifactId>Green-learning</artifactId>
+	<artifactId>green-learning</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>Green-learning</name>
 	<description>Pi GreenLearning</description>
 	<properties>
-		<java.version>19</java.version>
+		<java.version>17</java.version>
 		<sonar.projectKey>GreenLearning</sonar.projectKey>
 		<sonar.projectName>GreenLearning</sonar.projectName>
 		<sonar.host.url>http://localhost:9000</sonar.host.url>

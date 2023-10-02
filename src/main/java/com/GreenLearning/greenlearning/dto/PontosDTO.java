@@ -1,6 +1,6 @@
-package com.greenlearning.greenlearning.dto;
+package com.greenLearning.greenlearning.dto;
 
-import com.greenlearning.greenlearning.entity.Aluno;
+import com.greenLearning.greenlearning.entity.Aluno;
 import lombok.Getter;
 import lombok.Setter;
 

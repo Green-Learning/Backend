@@ -1,6 +1,6 @@
-package com.greenlearning.greenlearning.repository;
+package com.greenLearning.greenlearning.repository;
 
-import com.greenlearning.greenlearning.entity.User;
+import com.greenLearning.greenlearning.entity.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface UserRepository extends JpaRepository<User, Long> {

@@ -1,8 +1,8 @@
-package com.greenlearning.greenlearning.controller;
+package com.greenLearning.greenlearning.controller;
 
-import com.greenlearning.greenlearning.dto.SalaDTO;
-import com.greenlearning.greenlearning.entity.Sala;
-import com.greenlearning.greenlearning.service.SalaService;
+import com.greenLearning.greenlearning.dto.SalaDTO;
+import com.greenLearning.greenlearning.entity.Sala;
+import com.greenLearning.greenlearning.service.SalaService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;

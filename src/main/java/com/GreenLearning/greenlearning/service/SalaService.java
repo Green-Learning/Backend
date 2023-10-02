@@ -1,8 +1,8 @@
-package com.greenlearning.greenlearning.service;
+package com.greenLearning.greenlearning.service;
 
-import com.greenlearning.greenlearning.dto.SalaDTO;
-import com.greenlearning.greenlearning.entity.Sala;
-import com.greenlearning.greenlearning.repository.SalaRepository;
+import com.greenLearning.greenlearning.dto.SalaDTO;
+import com.greenLearning.greenlearning.entity.Sala;
+import com.greenLearning.greenlearning.repository.SalaRepository;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
