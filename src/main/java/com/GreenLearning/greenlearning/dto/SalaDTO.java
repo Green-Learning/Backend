@@ -21,4 +21,6 @@ public class SalaDTO extends AbstractEntityDTO{
         this.nome = nome;
         this.professor = professor;
     }
+
+    public SalaDTO(){}
 }

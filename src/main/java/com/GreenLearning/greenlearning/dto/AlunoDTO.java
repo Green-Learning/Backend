@@ -27,4 +27,8 @@ public class AlunoDTO extends AbstractEntityDTO {
         this.idade = idade;
         this.sala = sala;
     }
+
+    public AlunoDTO(){
+
+    }
 }

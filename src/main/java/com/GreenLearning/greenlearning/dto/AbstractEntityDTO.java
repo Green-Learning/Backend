@@ -19,4 +19,6 @@ public abstract class AbstractEntityDTO {
     protected AbstractEntityDTO(Long id) {
         this.id = id;
     }
+
+    protected AbstractEntityDTO(){}
 }
