@@ -14,6 +14,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping(value = "/sala")
+@CrossOrigin(origins = "*")
 public class SalaController {
 
     @Autowired

@@ -25,4 +25,6 @@ public class ProfessorDTO extends AbstractEntityDTO{
         this.usuario = usuario;
         this.nome = nome;
     }
+
+    public ProfessorDTO(){}
 }
