@@ -36,8 +36,8 @@ class TestPontos {
     @BeforeEach
     void injectData(){
 
-        User user = new User(1L,"pedrohenrique2023@gmail.com","123");
-        Professor professor = new Professor(1L,user,"1 A");
+        UserEntity userEntity = new UserEntity(1L,"pedrohenrique2023@gmail.com","123");
+        Professor professor = new Professor(1L, userEntity,"1 A");
         Sala sala = new Sala(1L,"1 A",professor);
         Aluno aluno = new Aluno(1L,"Pedro Henrique",2,sala);
 
@@ -70,8 +70,8 @@ class TestPontos {
     @DisplayName("Cadastrou pontuacao com sucesso!")
     void salvarTeste(){
 
-        User user = new User(1L,"pedrohenrique2023@gmail.com","123");
-        Professor professor = new Professor(1L,user,"1 A");
+        UserEntity userEntity = new UserEntity(1L,"pedrohenrique2023@gmail.com","123");
+        Professor professor = new Professor(1L, userEntity,"1 A");
         Sala sala = new Sala(1L,"1 A",professor);
         Aluno aluno = new Aluno(1L,"Pedro Henrique",2,sala);
 
@@ -107,8 +107,8 @@ class TestPontos {
     @DisplayName("Editou a pontuacao com sucesso!")
     void atualizarTeste(){
 
-        User user = new User(1L,"pedrohenrique2023@gmail.com","123");
-        Professor professor = new Professor(1L,user,"1 A");
+        UserEntity userEntity = new UserEntity(1L,"pedrohenrique2023@gmail.com","123");
+        Professor professor = new Professor(1L, userEntity,"1 A");
         Sala sala = new Sala(1L,"1 A",professor);
         Aluno aluno = new Aluno(1L,"Pedro Henrique",2,sala);
 

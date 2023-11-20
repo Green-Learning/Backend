@@ -1,10 +1,13 @@
 package com.greenLearning.greenlearning.repository;
 
-import com.greenLearning.greenlearning.entity.User;
+import com.greenLearning.greenlearning.entity.UserEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.security.core.userdetails.UserDetails;
 
-public interface UserRepository extends JpaRepository<User, Long> {
+import java.util.Optional;
+import java.util.UUID;
 
-    boolean existsByEmail(String email);
+public interface UserRepository extends JpaRepository<UserEntity, UUID> {
+    UserDetails findByUsername(String username);
 
 }

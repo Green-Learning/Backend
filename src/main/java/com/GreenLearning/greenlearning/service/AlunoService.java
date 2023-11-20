@@ -12,12 +12,13 @@ import org.webjars.NotFoundException;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
 @Service
 public class AlunoService {
 
     @Autowired
-    public AlunoRepository repository;
+    AlunoRepository repository;
 
     @Transactional
     public Aluno cadastrar(AlunoDTO alunoDTO){
@@ -28,7 +29,7 @@ public class AlunoService {
         return repository.save(aluno);
     }
 
-    public Aluno buscarPorId(Long id){
+    public Aluno buscarPorId(UUID id){
         Optional<Aluno> alunoOptional = repository.findById(id);
 
         if(alunoOptional.isEmpty()){
@@ -42,37 +43,25 @@ public class AlunoService {
 
         List<Aluno> alunos = repository.findAll();
         Assert.isTrue(alunos !=null, "não foi possivel localizar nenhum aluno cadastrado!");
-        /*
-        if (repository.findAll().isEmpty()){
-            throw new RuntimeException("não foi possivel localizar nenhum aluno cadastrado!");
-
-        } else {
-            return repository.findAll();
-        }*/
 
         return repository.findAll();
 
     }
 
     @Transactional
-    public Aluno editar(Long id, AlunoDTO alunoNovo){
+    public Aluno editar(UUID id, AlunoDTO alunoNovo){
         Aluno aluno = this.buscarPorId(id);
-        /*
-        if (!aluno.getId().equals(alunoNovo.getId())) {
-            throw new RuntimeException("Não foi possivel localizar o aluno informado!");
-        }*/
-
 
         Assert.isTrue(aluno !=null,"Não foi possivel localizar o aluno informado!");
 
-        aluno.setNome(alunoNovo.getNome());
-        aluno.setIdade(alunoNovo.getIdade());
+        aluno.setNome(alunoNovo.nome());
+        aluno.setIdade(alunoNovo.idade());
 
         return repository.save(aluno);
     }
 
     @Transactional
-    public void delete(Long id){
+    public void delete(UUID id){
         Aluno aluno = this.buscarPorId(id);
 
         repository.delete(aluno);
