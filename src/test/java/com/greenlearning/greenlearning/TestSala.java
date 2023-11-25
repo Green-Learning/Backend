@@ -4,7 +4,7 @@ import com.greenLearning.greenlearning.controller.SalaController;
 import com.greenLearning.greenlearning.dto.SalaDTO;
 import com.greenLearning.greenlearning.entity.Professor;
 import com.greenLearning.greenlearning.entity.Sala;
-import com.greenLearning.greenlearning.entity.User;
+import com.greenLearning.greenlearning.entity.UserEntity;
 import com.greenLearning.greenlearning.repository.SalaRepository;
 import com.greenLearning.greenlearning.service.SalaService;
 import org.junit.jupiter.api.Assertions;
@@ -38,8 +38,8 @@ class TestSala {
     @BeforeEach
     void injectData(){
 
-        User user = new User(1L,"pedrohenrique2023@gmail.com","123");
-        Professor professor = new Professor(1L,user,"1 A");
+        UserEntity userEntity = new UserEntity(1L,"pedrohenrique2023@gmail.com","123");
+        Professor professor = new Professor(1L, userEntity,"1 A");
 
         //BANCO DE DADOS
         Sala sala = new Sala(1L,"1 A",professor);
@@ -70,8 +70,8 @@ class TestSala {
     @DisplayName("Cadastrou sala com sucesso!")
     void salvarTeste(){
 
-        User user = new User(1L,"pedrohenrique2023@gmail.com","123");
-        Professor professor = new Professor(1L,user,"1 A");
+        UserEntity userEntity = new UserEntity(1L,"pedrohenrique2023@gmail.com","123");
+        Professor professor = new Professor(1L, userEntity,"1 A");
 
         var sala = controller.cadastrar(new SalaDTO(1L,"1 A",professor));
 
@@ -105,8 +105,8 @@ class TestSala {
     @DisplayName("Editou o sala com sucesso!")
     void atualizarTeste(){
 
-        User user = new User(1L,"pedrohenrique2023@gmail.com","123");
-        Professor professor = new Professor(1L,user,"1 A");
+        UserEntity userEntity = new UserEntity(1L,"pedrohenrique2023@gmail.com","123");
+        Professor professor = new Professor(1L, userEntity,"1 A");
 
         //BANCO DE DADOS
         SalaDTO salaDTO = new SalaDTO(1L,"1 B",professor);

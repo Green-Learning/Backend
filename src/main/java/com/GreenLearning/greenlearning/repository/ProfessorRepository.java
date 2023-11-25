@@ -3,6 +3,8 @@ package com.greenLearning.greenlearning.repository;
 import com.greenLearning.greenlearning.entity.Professor;
 import org.springframework.data.jpa.repository.JpaRepository;
 
-public interface ProfessorRepository extends JpaRepository<Professor, Long> {
+import java.util.UUID;
+
+public interface ProfessorRepository extends JpaRepository<Professor, UUID> {
 
 }

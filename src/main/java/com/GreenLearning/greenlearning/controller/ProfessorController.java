@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
+import java.util.UUID;
 
 @RestController
 @RequestMapping(value = "/professor")
@@ -18,7 +19,7 @@ import java.util.List;
 public class ProfessorController {
 
     @Autowired
-    public ProfessorService service;
+    ProfessorService service;
 
     @PostMapping
     public ResponseEntity<Professor> cadastrar(@Valid @RequestBody final ProfessorDTO professorDTO){
@@ -31,7 +32,7 @@ public class ProfessorController {
     }
 
     @GetMapping(value = "/buscar")
-    public ResponseEntity<Professor> buscarPorId(@RequestParam("id") final Long id){
+    public ResponseEntity<Professor> buscarPorId(@RequestParam("id") final UUID id){
         try {
             return ResponseEntity.status(HttpStatus.OK).body(service.buscarPorId(id));
 
@@ -51,7 +52,7 @@ public class ProfessorController {
     }
 
     @PutMapping(value = "/editar")
-    public ResponseEntity<Professor> editar(@RequestParam("id") final Long id, @Valid @RequestBody final ProfessorDTO professorNovo){
+    public ResponseEntity<Professor> editar(@RequestParam("id") final UUID id, @Valid @RequestBody final ProfessorDTO professorNovo){
         try {
             return ResponseEntity.status(HttpStatus.OK).body(service.editar(id,professorNovo));
 

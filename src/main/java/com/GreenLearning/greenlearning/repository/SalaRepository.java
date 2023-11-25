@@ -3,7 +3,9 @@ package com.greenLearning.greenlearning.repository;
 import com.greenLearning.greenlearning.entity.Sala;
 import org.springframework.data.jpa.repository.JpaRepository;
 
-public interface SalaRepository extends JpaRepository<Sala, Long> {
+import java.util.UUID;
+
+public interface SalaRepository extends JpaRepository<Sala, UUID> {
 
     boolean existsByNome(String nome);
 }
