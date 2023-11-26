@@ -1,30 +1,40 @@
-package com.greenlearning.greenlearning.entity;
+package com.greenLearning.greenlearning.entity;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Size;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.io.Serializable;
+import java.util.UUID;
+
 @Entity
-@Table(name = "tb_aluno")
+@Table(name = "TB_ALUNO")
 @Getter @Setter
 @NoArgsConstructor
-public class Aluno extends AbstractEntity{
+@AllArgsConstructor
+public class Aluno implements Serializable {
+    private static final long serialVersionUID = 1L;
 
-    @Column(name = "nome")
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private UUID id;
+
+    @Column
+    @NotBlank(message = "Nome é um campo obrigatorio!")
+    @Size(min = 3, max = 80, message = "Nome deve conter de 3 a 80 caracteres!")
     private String nome;
 
-    @Column(name = "idade")
+    @Column
+    @Min(value = 4, message = "Idade é um campo obrigatorio, e devem ter no mínimo 4 anos!")
+
     private Integer idade;
 
     @ManyToOne
     @JoinColumn(name = "sala_id")
     private Sala sala;
-
-    public Aluno(Long id, String nome, Integer idade, Sala sala) {
-        super(id);
-        this.nome = nome;
-        this.idade = idade;
-        this.sala = sala;
-    }
 }

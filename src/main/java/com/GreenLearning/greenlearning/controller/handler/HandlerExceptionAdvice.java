@@ -1,4 +1,4 @@
-package com.greenlearning.greenlearning.controller.handler;
+package com.greenLearning.greenlearning.controller.handler;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.validation.FieldError;

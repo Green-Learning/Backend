@@ -1,34 +1,36 @@
-package com.greenlearning.greenlearning.entity;
+package com.greenLearning.greenlearning.entity;
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.io.Serializable;
+import java.util.UUID;
+
 @Entity
-@Table(name = "tb_pontos")
+@Table(name = "TB_PONTOS")
 @NoArgsConstructor
+@AllArgsConstructor
 @Getter @Setter
-public class Pontos extends AbstractEntity{
+public class Pontos implements Serializable {
+    private static final long serialVersionUID = 1L;
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private UUID id;
 
     @ManyToOne
     @JoinColumn(name = "id_aluno")
     private Aluno aluno;
 
-    @Column(name = "jogo")
+    @Column
     private String jogo;
 
-    @Column(name = "score")
+    @Column
     private Integer score;
 
     @Column(name = "pontuacao_maior")
     private boolean maior;
-
-    public Pontos(Long id, Aluno aluno, String jogo, Integer score, boolean maior) {
-        super(id);
-        this.aluno = aluno;
-        this.jogo = jogo;
-        this.score = score;
-        this.maior = maior;
-    }
 }

@@ -1,8 +1,8 @@
-package com.greenlearning.greenlearning.service;
+package com.greenLearning.greenlearning.service;
 
-import com.greenlearning.greenlearning.dto.PontosDTO;
-import com.greenlearning.greenlearning.entity.Pontos;
-import com.greenlearning.greenlearning.repository.PontosRepository;
+import com.greenLearning.greenlearning.dto.PontosDTO;
+import com.greenLearning.greenlearning.entity.Pontos;
+import com.greenLearning.greenlearning.repository.PontosRepository;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,12 +12,13 @@ import org.webjars.NotFoundException;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
 @Service
 public class PontosService {
 
     @Autowired
-    public PontosRepository repository;
+    PontosRepository repository;
 
     @Transactional
     public Pontos cadastrar(PontosDTO pontosDTO){
@@ -28,7 +29,7 @@ public class PontosService {
         return repository.save(pontos);
     }
 
-    public Pontos buscarPorId(Long id) {
+    public Pontos buscarPorId(UUID id) {
         Optional<Pontos> pontos = repository.findById(id);
 
         if (pontos.isEmpty()){
@@ -39,32 +40,19 @@ public class PontosService {
     }
 
     public List<Pontos> listar() {
-        /*
-        if (repository.findAll().isEmpty()) {
-            throw new RuntimeException("não foi possivel localizar nenhum historio de pontuação cadastrado no banco!");
-
-        } else {
-            return repository.findAll();
-        }
-
-         */
         List<Pontos> pontos = repository.findAll();
+
         Assert.isTrue(pontos != null,"não foi possivel localizar nenhum historio de pontuação cadastrado no banco!");
+
         return repository.findAll();
     }
 
     @Transactional
-    public Pontos editar(Long id, PontosDTO pontosNovo){
+    public Pontos editar(UUID id, PontosDTO pontosNovo){
         Pontos pontos = this.buscarPorId(id);
 
-        /*if (!pontos.getId().equals(pontosNovo.getId())) {
-            throw new RuntimeException("Não foi possivel localizar o historico de pontos informado!");
-
-        }
-         */
-
         Assert.isTrue(pontos !=null, "Não foi possivel localizar o historico de pontos informado!");
-        pontos.setScore(pontosNovo.getScore());
+        pontos.setScore(pontosNovo.score());
 
         return repository.save(pontos);
     }

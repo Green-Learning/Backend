@@ -1,8 +1,8 @@
-package com.greenlearning.greenlearning.service;
+package com.greenLearning.greenlearning.service;
 
-import com.greenlearning.greenlearning.dto.SalaDTO;
-import com.greenlearning.greenlearning.entity.Sala;
-import com.greenlearning.greenlearning.repository.SalaRepository;
+import com.greenLearning.greenlearning.dto.SalaDTO;
+import com.greenLearning.greenlearning.entity.Sala;
+import com.greenLearning.greenlearning.repository.SalaRepository;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,12 +12,13 @@ import org.webjars.NotFoundException;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
 @Service
 public class SalaService {
 
     @Autowired
-    public SalaRepository repository;
+    SalaRepository repository;
 
     @Transactional
     public Sala cadastrar(SalaDTO salaDTO){
@@ -28,7 +29,7 @@ public class SalaService {
         return repository.save(sala);
     }
 
-    public Sala buscarPorId(Long id) {
+    public Sala buscarPorId(UUID id) {
         Optional<Sala> sala = repository.findById(id);
 
         if (sala.isEmpty()) {
@@ -39,36 +40,27 @@ public class SalaService {
     }
 
     public List<Sala> listar() {
-        /*
-        if (repository.findAll().isEmpty()) {
-            throw new RuntimeException("não foi possivel localizar nenhuma sala cadastrada!");
-
-        } else {
-            return repository.findAll();
-        }*/
         List<Sala> salas = repository.findAll();
+
         Assert.isTrue(salas !=null, "não foi possivel localizar nenhuma sala cadastrada!");
+
         return repository.findAll();
     }
 
     @Transactional
-    public Sala editar(Long id, SalaDTO salaNovo){
+    public Sala editar(UUID id, SalaDTO salaNovo){
         Sala sala = this.buscarPorId(id);
-        /*
-        if(!sala.getId().equals(salaNovo.getId())){
-            throw new RuntimeException("Não foi possivel localizar a sala informada!");
-        }*/
 
         Assert.isTrue(sala !=null, "Não foi possivel localizar a sala informada!");
 
-        sala.setNome(salaNovo.getNome());
-        sala.setProfessor(salaNovo.getProfessor());
+        sala.setNome(salaNovo.nome());
+        sala.setProfessor(salaNovo.professor());
 
         return repository.save(sala);
     }
 
     @Transactional
-    public void delete(Long id){
+    public void delete(UUID id){
         Sala sala = this.buscarPorId(id);
 
         repository.delete(sala);

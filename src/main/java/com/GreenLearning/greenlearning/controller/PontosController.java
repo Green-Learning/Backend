@@ -1,8 +1,8 @@
-package com.greenlearning.greenlearning.controller;
+package com.greenLearning.greenlearning.controller;
 
-import com.greenlearning.greenlearning.dto.PontosDTO;
-import com.greenlearning.greenlearning.entity.Pontos;
-import com.greenlearning.greenlearning.service.PontosService;
+import com.greenLearning.greenlearning.dto.PontosDTO;
+import com.greenLearning.greenlearning.entity.Pontos;
+import com.greenLearning.greenlearning.service.PontosService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
+import java.util.UUID;
 
 @RestController
 @RequestMapping(value = "/pontos")
@@ -18,7 +19,7 @@ import java.util.List;
 public class PontosController {
 
     @Autowired
-    public PontosService service;
+    PontosService service;
 
     @PostMapping
     public ResponseEntity<Pontos> cadastrar(@Valid @RequestBody final PontosDTO pontosDTO){
@@ -31,7 +32,7 @@ public class PontosController {
     }
 
     @GetMapping(value = "/buscar")
-    public ResponseEntity<Pontos> buscarPorId(@RequestParam("id") final Long id){
+    public ResponseEntity<Pontos> buscarPorId(@RequestParam("id") final UUID id){
         try {
             return ResponseEntity.status(HttpStatus.OK).body(service.buscarPorId(id));
 
@@ -51,7 +52,7 @@ public class PontosController {
     }
 
     @PutMapping(value = "/editar")
-    public ResponseEntity<Pontos> editar(@RequestParam("id") final Long id, @Valid @RequestBody final PontosDTO pontosDTO){
+    public ResponseEntity<Pontos> editar(@RequestParam("id") final UUID id, @Valid @RequestBody final PontosDTO pontosDTO){
         try {
             return ResponseEntity.status(HttpStatus.OK).body(service.editar(id,pontosDTO));
 

@@ -1,8 +1,8 @@
-package com.greenlearning.greenlearning.controller;
+package com.greenLearning.greenlearning.controller;
 
-import com.greenlearning.greenlearning.dto.AlunoDTO;
-import com.greenlearning.greenlearning.entity.Aluno;
-import com.greenlearning.greenlearning.service.AlunoService;
+import com.greenLearning.greenlearning.dto.AlunoDTO;
+import com.greenLearning.greenlearning.entity.Aluno;
+import com.greenLearning.greenlearning.service.AlunoService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
+import java.util.UUID;
 
 @RestController
 @RequestMapping(value = "/aluno")
@@ -18,7 +19,7 @@ import java.util.List;
 public class AlunoController {
 
     @Autowired
-    public AlunoService service;
+    AlunoService service;
 
     @PostMapping
     public ResponseEntity<Aluno> cadastrar(@Valid @RequestBody final AlunoDTO alunoDTO){
@@ -31,7 +32,7 @@ public class AlunoController {
     }
 
     @GetMapping(value = "/buscar")
-    public ResponseEntity<Aluno> buscarPorId(@RequestParam("id") final Long id){
+    public ResponseEntity<Aluno> buscarPorId(@RequestParam("id") final UUID id){
         try {
             return ResponseEntity.status(HttpStatus.OK).body(service.buscarPorId(id));
 
@@ -51,7 +52,7 @@ public class AlunoController {
     }
 
     @PutMapping(value = "/editar")
-    public ResponseEntity<Aluno> editar(@RequestParam("id") final Long id, @Valid @RequestBody final AlunoDTO alunoDTO){
+    public ResponseEntity<Aluno> editar(@RequestParam("id") final UUID id, @Valid @RequestBody final AlunoDTO alunoDTO){
         try {
             return ResponseEntity.status(HttpStatus.OK).body(service.editar(id,alunoDTO));
 
@@ -61,7 +62,7 @@ public class AlunoController {
     }
 
     @DeleteMapping(value = "/deletar")
-    public ResponseEntity<String> deletar(@RequestParam("id") final Long id){
+    public ResponseEntity<String> deletar(@RequestParam("id") final UUID id){
         try {
             service.delete(id);
             return ResponseEntity.status(HttpStatus.OK).body("Aluno deletado com sucesso!");

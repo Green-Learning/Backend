@@ -1,26 +1,34 @@
-package com.greenlearning.greenlearning.entity;
+package com.greenLearning.greenlearning.entity;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Size;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.io.Serializable;
+import java.util.UUID;
+
 @Entity
-@Table(name = "tb_professor")
+@Table(name = "TB_PROFESSOR")
 @NoArgsConstructor
+@AllArgsConstructor
 @Getter @Setter
-public class Professor extends AbstractEntity{
+public class Professor implements Serializable {
+    private static final long serialVersionUID = 1L;
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private UUID id;
 
     @OneToOne
     @JoinColumn(name = "user_id")
-    private User usuario;
+    private UserEntity usuario;
 
-    @Column(name = "nome")
+    @Column
+    @NotBlank(message = "Nome é um campo obrigatorio!")
+    @Size(min = 3, max = 80, message = "Nome deve conter de 3 a 80 caracteres!")
     private String nome;
-
-    public Professor(Long id, User usuario, String nome) {
-        super(id);
-        this.usuario = usuario;
-        this.nome = nome;
-    }
 }

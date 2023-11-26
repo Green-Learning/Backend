@@ -1,13 +1,13 @@
 package com.greenlearning.greenlearning;
 
-import com.greenlearning.greenlearning.controller.AlunoController;
-import com.greenlearning.greenlearning.dto.AlunoDTO;
-import com.greenlearning.greenlearning.entity.Aluno;
-import com.greenlearning.greenlearning.entity.Professor;
-import com.greenlearning.greenlearning.entity.Sala;
-import com.greenlearning.greenlearning.entity.User;
-import com.greenlearning.greenlearning.repository.AlunoRepository;
-import com.greenlearning.greenlearning.service.AlunoService;
+import com.greenLearning.greenlearning.controller.AlunoController;
+import com.greenLearning.greenlearning.dto.AlunoDTO;
+import com.greenLearning.greenlearning.entity.Aluno;
+import com.greenLearning.greenlearning.entity.Professor;
+import com.greenLearning.greenlearning.entity.Sala;
+import com.greenLearning.greenlearning.entity.UserEntity;
+import com.greenLearning.greenlearning.repository.AlunoRepository;
+import com.greenLearning.greenlearning.service.AlunoService;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -41,8 +41,8 @@ class TestAluno {
 	@BeforeEach
 	void injectData() {
 
-		User user = new User(1L, "pedrohenrique2023@gmail.com", "123");
-		Professor professor = new Professor(1L, user, "1 A");
+		UserEntity userEntity = new UserEntity(1L, "pedrohenrique2023@gmail.com", "123");
+		Professor professor = new Professor(1L, userEntity, "1 A");
 		Sala sala = new Sala(1L, "1 A", professor);
 
 		//BANCO DE DADOS
@@ -74,8 +74,8 @@ class TestAluno {
 	@DisplayName("Cadastrou aluno com sucesso!")
 	void salvarTeste() {
 
-		User user = new User(1L, "pedrohenrique2023@gmail.com", "123");
-		Professor professor = new Professor(1L, user, "1 A");
+		UserEntity userEntity = new UserEntity(1L, "pedrohenrique2023@gmail.com", "123");
+		Professor professor = new Professor(1L, userEntity, "1 A");
 		Sala sala = new Sala(1L, "1 A", professor);
 
 		var aluno = controller.cadastrar(new AlunoDTO(1L, "Pedro Henrique", 2, sala));
@@ -110,8 +110,8 @@ class TestAluno {
 	@DisplayName("Editou o aluno com sucesso!")
 	void atualizarTeste() {
 
-		User user = new User(1L, "pedrohenrique2023@gmail.com", "123");
-		Professor professor = new Professor(1L, user, "1 A");
+		UserEntity userEntity = new UserEntity(1L, "pedrohenrique2023@gmail.com", "123");
+		Professor professor = new Professor(1L, userEntity, "1 A");
 		Sala sala = new Sala(1L, "1 A", professor);
 
 		AlunoDTO alunoDTO = new AlunoDTO(1L, "Spining Splendi Spaining House", 2, sala);

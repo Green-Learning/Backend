@@ -1,10 +1,10 @@
 package com.greenlearning.greenlearning;
 
-import com.greenlearning.greenlearning.controller.UserController;
-import com.greenlearning.greenlearning.dto.UserDTO;
-import com.greenlearning.greenlearning.entity.User;
-import com.greenlearning.greenlearning.repository.UserRepository;
-import com.greenlearning.greenlearning.service.UserService;
+import com.greenLearning.greenlearning.controller.UserController;
+import com.greenLearning.greenlearning.dto.UserEntityDTO;
+import com.greenLearning.greenlearning.entity.UserEntity;
+import com.greenLearning.greenlearning.repository.UserRepository;
+import com.greenLearning.greenlearning.service.UserService;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -22,7 +22,7 @@ import java.util.Optional;
 import static org.mockito.Mockito.when;
 
 @SpringBootTest
-class TestUser {
+class TestUserEntity {
 
     @MockBean
     UserRepository repository;
@@ -37,35 +37,35 @@ class TestUser {
     void injectData(){
 
         //BANCO DE DADOS
-        User user = new User(1L,"pedrohenrique2023@gmail.com","123");
+        UserEntity userEntity = new UserEntity(1L,"pedrohenrique2023@gmail.com","123");
 
         //INSERÇÃO MANUAL PARA TESTAR CADASTRAR
-        when(repository.save(Mockito.any(User.class))).thenAnswer(invocation -> {
-            User userSalvo = invocation.getArgument(0);
-            userSalvo.setId(1L);
-            return userSalvo;
+        when(repository.save(Mockito.any(UserEntity.class))).thenAnswer(invocation -> {
+            UserEntity userEntitySalvo = invocation.getArgument(0);
+            userEntitySalvo.setId(1L);
+            return userEntitySalvo;
         });
 
-        List<User> users = new ArrayList<>();
-        users.add(user);
+        List<UserEntity> userEntities = new ArrayList<>();
+        userEntities.add(userEntity);
 
         //TESTAR BUSCAR POR ID
         Long id = 1L;
-        when(repository.findById(id)).thenReturn(Optional.of(user));
+        when(repository.findById(id)).thenReturn(Optional.of(userEntity));
 
         //TESTAR LISTAR TODOS
-        when(repository.findAll()).thenReturn(users);
+        when(repository.findAll()).thenReturn(userEntities);
 
         //TESTAR ATUALIZAR
-        User userNovo = new User(1L,"pedrohenrique2023@gmail.com","123456789");
-        when(repository.save(userNovo)).thenReturn(users.get(0));
+        UserEntity userEntityNovo = new UserEntity(1L,"pedrohenrique2023@gmail.com","123456789");
+        when(repository.save(userEntityNovo)).thenReturn(userEntities.get(0));
     }
 
     @Test
     @DisplayName("Cadastrou user com sucesso!")
     void salvarTeste(){
 
-        var user = controller.cadastrar(new UserDTO(1L,"pedrohenrique2023@gmail.com","123"));
+        var user = controller.cadastrar(new UserEntityDTO(1L,"pedrohenrique2023@gmail.com","123"));
 
         Assertions.assertEquals(1L,user.getBody().getId());
         Assertions.assertEquals(HttpStatus.CREATED,user.getStatusCode());
@@ -86,20 +86,20 @@ class TestUser {
     void listarTodosTest(){
 
         var user = controller.listar();
-        List<User> users = user.getBody();
+        List<UserEntity> userEntities = user.getBody();
 
         Assertions.assertEquals(HttpStatus.OK, user.getStatusCode());
-        Assertions.assertEquals("pedrohenrique2023@gmail.com", users.get(0).getEmail());
-        Assertions.assertEquals(1,users.size());
+        Assertions.assertEquals("pedrohenrique2023@gmail.com", userEntities.get(0).getEmail());
+        Assertions.assertEquals(1, userEntities.size());
     }
 
     @Test
     @DisplayName("Editou o user com sucesso!")
     void atualizarTeste(){
 
-        UserDTO userDTO = new UserDTO(1L,"pedrohenrique2023@gmail.com","123456789");
+        UserEntityDTO userEntityDTO = new UserEntityDTO(1L,"pedrohenrique2023@gmail.com","123456789");
 
-        var professorNovo = controller.editar(userDTO.getId(),userDTO);
+        var professorNovo = controller.editar(userEntityDTO.getId(), userEntityDTO);
 
         Assertions.assertEquals(HttpStatus.OK,professorNovo.getStatusCode());
         Assertions.assertEquals("123456789", professorNovo.getBody().getSenha());

@@ -1,11 +1,11 @@
 package com.greenlearning.greenlearning;
 
-import com.greenlearning.greenlearning.controller.ProfessorController;
-import com.greenlearning.greenlearning.dto.ProfessorDTO;
-import com.greenlearning.greenlearning.entity.Professor;
-import com.greenlearning.greenlearning.entity.User;
-import com.greenlearning.greenlearning.repository.ProfessorRepository;
-import com.greenlearning.greenlearning.service.ProfessorService;
+import com.greenLearning.greenlearning.controller.ProfessorController;
+import com.greenLearning.greenlearning.dto.ProfessorDTO;
+import com.greenLearning.greenlearning.entity.Professor;
+import com.greenLearning.greenlearning.entity.UserEntity;
+import com.greenLearning.greenlearning.repository.ProfessorRepository;
+import com.greenLearning.greenlearning.service.ProfessorService;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -38,10 +38,10 @@ class TestProfessor {
     @BeforeEach
     void injectData(){
 
-        User user = new User(1L,"pedrohenrique2023@gmail.com","123");
+        UserEntity userEntity = new UserEntity(1L,"pedrohenrique2023@gmail.com","123");
 
         //BANCO DE DADOS
-        Professor professor = new Professor(1L,user,"Pedro Henrique");
+        Professor professor = new Professor(1L, userEntity,"Pedro Henrique");
 
         //INSERÇÃO MANUAL PARA TESTAR CADASTRAR
         when(repository.save(Mockito.any(Professor.class))).thenAnswer(invocation -> {
@@ -61,7 +61,7 @@ class TestProfessor {
         when(repository.findAll()).thenReturn(professores);
 
         //TESTAR ATUALIZAR
-        Professor professorNovo = new Professor(1L,user,"Jhonson e Jhonson");
+        Professor professorNovo = new Professor(1L, userEntity,"Jhonson e Jhonson");
         when(repository.save(professorNovo)).thenReturn(professores.get(0));
     }
 
@@ -69,9 +69,9 @@ class TestProfessor {
     @DisplayName("Cadastrou professor com sucesso!")
     void salvarTeste(){
 
-        User user = new User(1L,"pedrohenrique2023@gmail.com","123");
+        UserEntity userEntity = new UserEntity(1L,"pedrohenrique2023@gmail.com","123");
 
-        var professor = controller.cadastrar(new ProfessorDTO(1L,user,"Pedro Henrique"));
+        var professor = controller.cadastrar(new ProfessorDTO(1L, userEntity,"Pedro Henrique"));
 
         Assertions.assertEquals(1L,professor.getBody().getId());
         Assertions.assertEquals(HttpStatus.CREATED,professor.getStatusCode());
@@ -103,8 +103,8 @@ class TestProfessor {
     @DisplayName("Editou o professor com sucesso!")
     void atualizarTeste(){
 
-        User user = new User(1L,"pedrohenrique2023@gmail.com","123");
-        ProfessorDTO professorDTO = new ProfessorDTO(1L,user,"Jhonson e Jhonson");
+        UserEntity userEntity = new UserEntity(1L,"pedrohenrique2023@gmail.com","123");
+        ProfessorDTO professorDTO = new ProfessorDTO(1L, userEntity,"Jhonson e Jhonson");
 
         var professorNovo = controller.editar(professorDTO.getId(),professorDTO);
 

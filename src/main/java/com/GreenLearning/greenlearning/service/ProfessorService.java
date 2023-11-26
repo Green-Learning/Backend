@@ -1,8 +1,8 @@
-package com.greenlearning.greenlearning.service;
+package com.greenLearning.greenlearning.service;
 
-import com.greenlearning.greenlearning.dto.ProfessorDTO;
-import com.greenlearning.greenlearning.entity.Professor;
-import com.greenlearning.greenlearning.repository.ProfessorRepository;
+import com.greenLearning.greenlearning.dto.ProfessorDTO;
+import com.greenLearning.greenlearning.entity.Professor;
+import com.greenLearning.greenlearning.repository.ProfessorRepository;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,12 +12,13 @@ import org.webjars.NotFoundException;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
 @Service
 public class ProfessorService {
 
     @Autowired
-    public ProfessorRepository repository;
+    ProfessorRepository repository;
 
     @Transactional
     public Professor cadastrar(ProfessorDTO professorDTO) {
@@ -28,7 +29,7 @@ public class ProfessorService {
         return repository.save(professor);
     }
 
-    public Professor buscarPorId(Long id) {
+    public Professor buscarPorId(UUID id) {
         Optional<Professor> professor = repository.findById(id);
 
         if (professor.isEmpty()){
@@ -39,31 +40,20 @@ public class ProfessorService {
     }
 
     public List<Professor> listar() {
-        /*
-        if (repository.findAll().isEmpty()) {
-            throw new RuntimeException("não foi possivel localizar nenhum professor cadastrado!");
-
-        } else {
-            return repository.findAll();
-        }
-         */
         List<Professor> professors = repository.findAll();
+
         Assert.isTrue(professors !=null, "não foi possivel localizar nenhum professor cadastrado!");
+
         return repository.findAll();
     }
 
 
     @Transactional
-    public Professor editar(Long id, ProfessorDTO professorNovo) {
+    public Professor editar(UUID id, ProfessorDTO professorNovo) {
         Professor professor = this.buscarPorId(id);
-        /*
-        if (!professor.getId().equals(professorNovo.getId())) {
-            throw new RuntimeException("Não foi possivel localizar o professor informado!");
-        }
-          */
 
         Assert.isTrue(professor !=null, "Não foi possivel localizar o professor informado!");
-        professor.setNome(professorNovo.getNome());
+        professor.setNome(professorNovo.nome());
 
         return repository.save(professor);
     }

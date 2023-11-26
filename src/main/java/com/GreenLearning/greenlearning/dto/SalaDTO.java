@@ -1,26 +1,5 @@
-package com.greenlearning.greenlearning.dto;
+package com.greenLearning.greenlearning.dto;
 
-import com.greenlearning.greenlearning.entity.Professor;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.Size;
-import lombok.Getter;
-import lombok.Setter;
+import com.greenLearning.greenlearning.entity.Professor;
 
-public class SalaDTO extends AbstractEntityDTO{
-
-    @Getter @Setter
-    @NotBlank(message = "Nome é um campo obrigatorio!")
-    @Size(max = 25, message = "Nome deve conter até 25 caracteres!")
-    private String nome;
-
-    @Getter @Setter
-    private Professor professor;
-
-    public SalaDTO(Long id, String nome, Professor professor) {
-        super(id);
-        this.nome = nome;
-        this.professor = professor;
-    }
-
-    public SalaDTO(){}
-}
+public record SalaDTO(String nome, Professor professor)  {}
