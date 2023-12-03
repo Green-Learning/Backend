@@ -1,6 +1,5 @@
 package com.greenLearning.greenlearning.entity;
 
-import com.greenLearning.greenlearning.entity.role.Roles;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
@@ -9,6 +8,8 @@ import lombok.*;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
+
+import com.greenLearning.greenlearning.entity.role.Roles;
 
 import java.io.Serializable;
 import java.util.Collection;
@@ -34,7 +35,7 @@ public class UserEntity implements Serializable, UserDetails {
 
     @Column
     @NotBlank(message = "Preencha o campo senha!")
-    @Size(max = 50, message = "Senha deve conter até 50 caracteres!")
+    // @Size(max = 50, message = "Senha deve conter até 50 caracteres!")
     private String password;
 
     @Column
@@ -47,6 +48,13 @@ public class UserEntity implements Serializable, UserDetails {
         if(this.role == Roles.DIRETORA) return List.of(new SimpleGrantedAuthority("ROLE_ADMIN"), new SimpleGrantedAuthority("ROLE_USER"));
 
         else return List.of(new SimpleGrantedAuthority("ROLE_USER"));
+    }
+
+
+    public UserEntity(UUID id, String username, String password) {
+        this.id = id;
+        this.username = username;
+        this.password = password;
     }
 
     @Override
