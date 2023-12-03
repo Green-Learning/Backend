@@ -12,7 +12,6 @@ import org.webjars.NotFoundException;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.UUID;
 
 @Service
 public class AlunoService {
@@ -29,7 +28,7 @@ public class AlunoService {
         return repository.save(aluno);
     }
 
-    public Aluno buscarPorId(UUID id){
+    public Aluno buscarPorId(Long id){
         Optional<Aluno> alunoOptional = repository.findById(id);
 
         if(alunoOptional.isEmpty()){
@@ -49,7 +48,7 @@ public class AlunoService {
     }
 
     @Transactional
-    public Aluno editar(UUID id, AlunoDTO alunoNovo){
+    public Aluno editar(Long id, AlunoDTO alunoNovo){
         Aluno aluno = this.buscarPorId(id);
 
         Assert.isTrue(aluno !=null,"Não foi possivel localizar o aluno informado!");
@@ -61,7 +60,7 @@ public class AlunoService {
     }
 
     @Transactional
-    public void delete(UUID id){
+    public void delete(Long id){
         Aluno aluno = this.buscarPorId(id);
 
         repository.delete(aluno);

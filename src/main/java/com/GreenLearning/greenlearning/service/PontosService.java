@@ -12,7 +12,6 @@ import org.webjars.NotFoundException;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.UUID;
 
 @Service
 public class PontosService {
@@ -29,7 +28,7 @@ public class PontosService {
         return repository.save(pontos);
     }
 
-    public Pontos buscarPorId(UUID id) {
+    public Pontos buscarPorId(Long id) {
         Optional<Pontos> pontos = repository.findById(id);
 
         if (pontos.isEmpty()){
@@ -48,7 +47,7 @@ public class PontosService {
     }
 
     @Transactional
-    public Pontos editar(UUID id, PontosDTO pontosNovo){
+    public Pontos editar(Long id, PontosDTO pontosNovo){
         Pontos pontos = this.buscarPorId(id);
 
         Assert.isTrue(pontos !=null, "Não foi possivel localizar o historico de pontos informado!");

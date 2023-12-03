@@ -1,53 +1,74 @@
 package com.greenLearning.greenlearning.config.security;
 
-import com.auth0.jwt.JWT;
-import com.auth0.jwt.algorithms.Algorithm;
-import com.auth0.jwt.exceptions.JWTCreationException;
-import com.auth0.jwt.exceptions.JWTVerificationException;
 import com.greenLearning.greenlearning.entity.UserEntity;
-import org.springframework.beans.factory.annotation.Value;
+import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.Jwts;
+import io.jsonwebtoken.io.Decoders;
+import io.jsonwebtoken.security.Keys;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
-import java.time.Instant;
-import java.time.LocalDateTime;
-import java.time.ZoneOffset;
+import java.security.Key;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.function.Function;
 
 @Service
 public class TokenService {
 
-    @Value("${security.jwt.chave-secret}")
-    private String secret;
+    public String generateToken(UserEntity userEntity) {
 
-    public String gerarToken(UserEntity user){
-        try {
-            Algorithm algorithm = Algorithm.HMAC256(secret);
-            String token = JWT.create()
-                    .withIssuer("auth-greenLearning")
-                    .withSubject(user.getUsername())
-                    .withExpiresAt(geradorDeExpiracaoToken())
-                    .sign(algorithm);
-            return token;
+        Map<String, Object> extraClaims = new HashMap<>();
+        extraClaims.put("username", userEntity.getUsername());
+        extraClaims.put("id", userEntity.getId().toString());
+        extraClaims.put("role", userEntity.getRole());
 
-        } catch (JWTCreationException e){
-            throw new JWTCreationException("Erro ao fazer a criação do token", e);
-        }
+        return Jwts
+                .builder()
+                .setClaims(extraClaims)
+                .setSubject(userEntity.getUsername())
+                .setIssuedAt(new Date(System.currentTimeMillis()))
+                .setExpiration(new Date(new Date().getTime() + 3600000 * JwtParameters.HORAS_EXPIRACAO_TOKEN))
+                .signWith(getSigningKey(), JwtParameters.ALGORITMO_ASSINATURA)
+                .compact();
     }
 
-    private Instant geradorDeExpiracaoToken(){
-        return LocalDateTime.now().plusHours(2).toInstant(ZoneOffset.of("-03:00:00"));
+    private Claims extractAllClaims(String token) {
+        return Jwts
+                .parserBuilder()
+                .setSigningKey(getSigningKey())
+                .build()
+                .parseClaimsJws(token)
+                .getBody();
     }
 
-    public String validarToken(String token){
-        try {
-            Algorithm algorithm = Algorithm.HMAC256(secret);
-            return JWT.require(algorithm)
-                    .withIssuer("auth-greenLearning")
-                    .build()
-                    .verify(token)
-                    .getSubject();
 
-        } catch (JWTVerificationException e){
-            return "";
-        }
+    public boolean isTokenValid(String token, UserDetails userDetails) {
+        final String username = extractUsername(token);
+        return (username.equals(userDetails.getUsername())) && !isTokenExpired(token);
+    }
+
+    private boolean isTokenExpired(String token) {
+        return extractExpiration(token).before(new Date());
+    }
+
+    private Date extractExpiration(String token) {
+        return extractClaim(token, Claims::getExpiration);
+    }
+
+    private Key getSigningKey() {
+        byte[] keyBytes = Decoders.BASE64.decode(JwtParameters.SECRET_KEY);
+        return Keys.hmacShaKeyFor(keyBytes);
+    }
+
+
+    public String extractUsername(String token) {
+        return extractClaim(token,Claims::getSubject);
+    }
+
+    public <T> T extractClaim(String token, Function<Claims, T> claimsResolver) {
+        final Claims claims = extractAllClaims(token);
+        return claimsResolver.apply(claims);
     }
 }

@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
-import java.util.UUID;
 
 @RestController
 @RequestMapping(value = "/aluno")
@@ -32,7 +31,7 @@ public class AlunoController {
     }
 
     @GetMapping(value = "/buscar")
-    public ResponseEntity<Aluno> buscarPorId(@RequestParam("id") final UUID id){
+    public ResponseEntity<Aluno> buscarPorId(@RequestParam("id") final Long id){
         try {
             return ResponseEntity.status(HttpStatus.OK).body(service.buscarPorId(id));
 
@@ -52,7 +51,7 @@ public class AlunoController {
     }
 
     @PutMapping(value = "/editar")
-    public ResponseEntity<Aluno> editar(@RequestParam("id") final UUID id, @Valid @RequestBody final AlunoDTO alunoDTO){
+    public ResponseEntity<Aluno> editar(@RequestParam("id") final Long id, @Valid @RequestBody final AlunoDTO alunoDTO){
         try {
             return ResponseEntity.status(HttpStatus.OK).body(service.editar(id,alunoDTO));
 
@@ -62,7 +61,7 @@ public class AlunoController {
     }
 
     @DeleteMapping(value = "/deletar")
-    public ResponseEntity<String> deletar(@RequestParam("id") final UUID id){
+    public ResponseEntity<String> deletar(@RequestParam("id") final Long id){
         try {
             service.delete(id);
             return ResponseEntity.status(HttpStatus.OK).body("Aluno deletado com sucesso!");

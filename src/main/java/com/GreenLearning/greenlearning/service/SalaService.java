@@ -29,7 +29,7 @@ public class SalaService {
         return repository.save(sala);
     }
 
-    public Sala buscarPorId(UUID id) {
+    public Sala buscarPorId(Long id) {
         Optional<Sala> sala = repository.findById(id);
 
         if (sala.isEmpty()) {
@@ -48,7 +48,7 @@ public class SalaService {
     }
 
     @Transactional
-    public Sala editar(UUID id, SalaDTO salaNovo){
+    public Sala editar(Long id, SalaDTO salaNovo){
         Sala sala = this.buscarPorId(id);
 
         Assert.isTrue(sala !=null, "Não foi possivel localizar a sala informada!");
@@ -60,7 +60,7 @@ public class SalaService {
     }
 
     @Transactional
-    public void delete(UUID id){
+    public void delete(Long id){
         Sala sala = this.buscarPorId(id);
 
         repository.delete(sala);

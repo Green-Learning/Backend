@@ -6,20 +6,16 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.io.Serializable;
-import java.util.UUID;
-
 @Entity
-@Table(name = "TB_PONTOS")
+@Table(name = "tb_pontos")
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter @Setter
-public class Pontos implements Serializable {
-    private static final long serialVersionUID = 1L;
+public class Pontos  {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private UUID id;
+    private Long id;
 
     @ManyToOne
     @JoinColumn(name = "id_aluno")

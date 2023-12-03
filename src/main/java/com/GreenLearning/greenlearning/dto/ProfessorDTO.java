@@ -2,4 +2,6 @@ package com.greenLearning.greenlearning.dto;
 
 import com.greenLearning.greenlearning.entity.UserEntity;
 
-public record ProfessorDTO(UserEntity usuario, String nome) {}
+import java.util.UUID;
+
+public record ProfessorDTO(Long id, UserEntity usuario, String nome) {}

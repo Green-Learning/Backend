@@ -5,5 +5,5 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.UUID;
 
-public interface PontosRepository extends JpaRepository<Pontos, UUID> {
+public interface PontosRepository extends JpaRepository<Pontos, Long> {
 }

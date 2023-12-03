@@ -6,6 +6,7 @@ import com.greenLearning.greenlearning.entity.Aluno;
 import com.greenLearning.greenlearning.entity.Professor;
 import com.greenLearning.greenlearning.entity.Sala;
 import com.greenLearning.greenlearning.entity.UserEntity;
+import com.greenLearning.greenlearning.entity.enuns.Roles;
 import com.greenLearning.greenlearning.repository.AlunoRepository;
 import com.greenLearning.greenlearning.service.AlunoService;
 import org.junit.jupiter.api.Assertions;
@@ -23,7 +24,6 @@ import java.util.List;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertNull;
-import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.mockito.Mockito.when;
 
 @SpringBootTest
@@ -41,12 +41,11 @@ class TestAluno {
 	@BeforeEach
 	void injectData() {
 
-		UserEntity userEntity = new UserEntity(1L, "pedrohenrique2023@gmail.com", "123");
-		Professor professor = new Professor(1L, userEntity, "1 A");
-		Sala sala = new Sala(1L, "1 A", professor);
+		UserEntity userEntity = new UserEntity(1L, "pedrohenrique2023@gmail.com", "123", Roles.PROFESSOR);
+		Professor professor = new Professor(1L,"1 A", userEntity);
 
 		//BANCO DE DADOS
-		Aluno aluno = new Aluno(1L, "Pedro Henrique", 2, sala);
+		Aluno aluno = new Aluno(1L, "Pedro Henrique", 2);
 
 		//INSERÇÃO MANUAL PARA TESTAR CADASTRAR
 		when(repository.save(Mockito.any(Aluno.class))).thenAnswer(invocation -> {
@@ -66,7 +65,7 @@ class TestAluno {
 		when(repository.findAll()).thenReturn(alunos);
 
 		//TESTAR ATUALIZAR
-		Aluno alunoNovo = new Aluno(1L, "Spining Splendi Spaining House", 2, sala);
+		Aluno alunoNovo = new Aluno(1L, "Spining Splendi Spaining House", 2);
 		when(repository.save(alunoNovo)).thenReturn(alunos.get(0));
 	}
 
@@ -74,11 +73,10 @@ class TestAluno {
 	@DisplayName("Cadastrou aluno com sucesso!")
 	void salvarTeste() {
 
-		UserEntity userEntity = new UserEntity(1L, "pedrohenrique2023@gmail.com", "123");
-		Professor professor = new Professor(1L, userEntity, "1 A");
-		Sala sala = new Sala(1L, "1 A", professor);
+		UserEntity userEntity = new UserEntity(1L, "pedrohenrique2023@gmail.com", "123", Roles.PROFESSOR);
+		Professor professor = new Professor(1L,"1 A", userEntity);
 
-		var aluno = controller.cadastrar(new AlunoDTO(1L, "Pedro Henrique", 2, sala));
+		var aluno = controller.cadastrar(new AlunoDTO(1L, "Pedro Henrique", 2));
 
 		Assertions.assertEquals(1L, aluno.getBody().getId());
 		Assertions.assertEquals(HttpStatus.CREATED, aluno.getStatusCode());
@@ -110,13 +108,12 @@ class TestAluno {
 	@DisplayName("Editou o aluno com sucesso!")
 	void atualizarTeste() {
 
-		UserEntity userEntity = new UserEntity(1L, "pedrohenrique2023@gmail.com", "123");
-		Professor professor = new Professor(1L, userEntity, "1 A");
-		Sala sala = new Sala(1L, "1 A", professor);
+		UserEntity userEntity = new UserEntity(1L, "pedrohenrique2023@gmail.com", "123", Roles.PROFESSOR);
+		Professor professor = new Professor(1L,"1 A", userEntity);
 
-		AlunoDTO alunoDTO = new AlunoDTO(1L, "Spining Splendi Spaining House", 2, sala);
+		AlunoDTO alunoDTO = new AlunoDTO(1L, "Spining Splendi Spaining House", 2);
 
-		var aluno = controller.editar(alunoDTO.getId(), alunoDTO);
+		var aluno = controller.editar(alunoDTO.id(), alunoDTO);
 
 		Assertions.assertEquals(HttpStatus.OK, aluno.getStatusCode());
 		Assertions.assertEquals("Spining Splendi Spaining House", aluno.getBody().getNome());
@@ -135,12 +132,10 @@ class TestAluno {
 	@Test
 	void testeUnitarioUnitarios() {
 		Sala salaMock = Mockito.mock(Sala.class);
-		Aluno aluno = new Aluno(null, null, null, salaMock);
+		Aluno aluno = new Aluno(null, null, null);
 		assertNull(aluno.getId());
 		assertNull(aluno.getNome());
 		assertNull(aluno.getIdade());
-		assertSame(salaMock, aluno.getSala());
-
 	}
 
 }
