@@ -38,6 +38,16 @@ public class ProfessorService {
         return professor.get();
     }
 
+        public Professor buscarProfessorPorIdUser(Long id) {
+            Optional<Professor> professor = repository.buscarProfessorPorIdUser(id);
+
+            if (professor.isEmpty()){
+                Assert.isTrue(professor.isEmpty(), "Professor informado não foi localizado!");
+                throw new NotFoundException("erro!!!");
+            }
+            return professor.get();
+        }
+
     public List<Professor> listar() {
         List<Professor> professors = repository.findAll();
 

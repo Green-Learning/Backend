@@ -36,11 +36,11 @@ public class SecurityConfiguration {
                 .cors(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests((requests) -> requests
                         .requestMatchers("/user/login").permitAll()
-                        .requestMatchers("/aluno/*").hasAnyRole("PROFESSOR","PROFESSORA","DIRETOR","DIRETORA")
-                        .requestMatchers("/professor/*").hasAnyRole("DIRETOR","DIRETORA")
-                        .requestMatchers("/sala/*").hasAnyRole("PROFESSOR","PROFESSORA")
-                        .requestMatchers("/pontos/*").hasAnyRole("PROFESSOR","PROFESSORA","DIRETOR","DIRETORA")
-                        .anyRequest().authenticated())
+                        .requestMatchers("/aluno/").hasAnyRole("ADMIN","USER")
+                        .requestMatchers("/professor/").hasAnyRole("ADMIN")
+                        .requestMatchers("/sala/").hasAnyRole("ADMIN","USER")
+                        .requestMatchers("/pontos/").hasAnyRole("ADMIN","USER")
+                        .anyRequest().permitAll())
                 .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class)
                 .sessionManagement(customizer -> customizer.sessionCreationPolicy(SessionCreationPolicy.STATELESS));
 

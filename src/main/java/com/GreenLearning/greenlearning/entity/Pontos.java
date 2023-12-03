@@ -22,11 +22,5 @@ public class Pontos  {
     private Aluno aluno;
 
     @Column
-    private String jogo;
-
-    @Column
     private Integer score;
-
-    @Column(name = "pontuacao_maior")
-    private boolean maior;
 }

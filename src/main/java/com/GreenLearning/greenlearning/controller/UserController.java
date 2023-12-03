@@ -54,6 +54,9 @@ public class UserController {
         }
     }
 
+   
+
+
     @GetMapping(value = "/listar")
     public ResponseEntity<List<UserEntity>> listar(){
         try {
@@ -73,4 +76,6 @@ public class UserController {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST,"Error editar, " + e.getMessage());
         }
     }
+
+
 }

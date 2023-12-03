@@ -2,6 +2,7 @@ package com.greenLearning.greenlearning.controller;
 
 import com.greenLearning.greenlearning.dto.ProfessorDTO;
 import com.greenLearning.greenlearning.entity.Professor;
+import com.greenLearning.greenlearning.entity.UserEntity;
 import com.greenLearning.greenlearning.service.ProfessorService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,6 +35,16 @@ public class ProfessorController {
     public ResponseEntity<Professor> buscarPorId(@RequestParam("id") final Long id){
         try {
             return ResponseEntity.status(HttpStatus.OK).body(service.buscarPorId(id));
+
+        } catch (Exception e){
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Error buscar, " + e.getMessage());
+        }
+    }
+
+    @GetMapping(value = "/buscar/user_id")
+    public ResponseEntity<Professor> buscarProfessorPorIdUser(@RequestParam("id") final Long id){
+        try {
+            return ResponseEntity.status(HttpStatus.OK).body(service.buscarProfessorPorIdUser(id));
 
         } catch (Exception e){
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Error buscar, " + e.getMessage());
