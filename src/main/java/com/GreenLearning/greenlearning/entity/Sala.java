@@ -8,28 +8,37 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.io.Serializable;
-import java.util.UUID;
+import java.util.Set;
 
 @Entity
-@Table(name = "TB_SALA")
+@Table(name = "tb_sala")
 @Getter @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class Sala implements Serializable {
-    private static final long serialVersionUID = 1L;
+public class Sala  {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private UUID id;
+    private Long id;
 
     @Column
     @NotBlank(message = "Nome é um campo obrigatorio!")
     @Size(max = 25, message = "Nome deve conter até 25 caracteres!")
     private String nome;
 
+    @Column
+    private Boolean ativo;
+
     @ManyToOne
     @JoinColumn(name = "id_professor")
     private Professor professor;
+
+    @ManyToMany
+    @JoinTable(
+            name = "tb_sala_alunos",
+            joinColumns = @JoinColumn(name = "sala_id"),
+            inverseJoinColumns = @JoinColumn(name = "aluno_id")
+    )
+    private Set<Aluno> alunos;
 
 }

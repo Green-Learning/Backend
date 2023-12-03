@@ -2,4 +2,6 @@ package com.greenLearning.greenlearning.dto;
 
 import com.greenLearning.greenlearning.entity.Sala;
 
-public record AlunoDTO(String nome,Integer idade, Sala sala) {}
+import java.util.UUID;
+
+public record AlunoDTO(Long id, String nome, Integer idade) {}

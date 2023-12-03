@@ -1,62 +1,60 @@
 package com.greenLearning.greenlearning.entity;
 
-import com.greenLearning.greenlearning.entity.role.Roles;
+import com.greenLearning.greenlearning.entity.enuns.Roles;
 import jakarta.persistence.*;
-import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.Size;
 import lombok.*;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
-import java.io.Serializable;
 import java.util.Collection;
 import java.util.List;
-import java.util.UUID;
 
 @Entity
-@Table(name = "TB_USERS")
+@Table(name = "tb_user")
 @Getter @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class UserEntity implements Serializable, UserDetails {
-    private static final long serialVersionUID = 1L;
+public class UserEntity implements UserDetails {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private UUID id;
+    private Long id;
 
     @Column
     @NotBlank(message = "Preencha o campo email!")
-    @Email(message = "Informe um email valido!")
     private String username;
 
     @Column
     @NotBlank(message = "Preencha o campo senha!")
-    @Size(max = 50, message = "Senha deve conter até 50 caracteres!")
     private String password;
 
     @Column
     @NotBlank(message = "Preencha o campo role!")
+    @Enumerated(EnumType.STRING)
     private Roles role;
+
+    public UserEntity(String username, String password) {
+        this.username = username;
+        this.password = password;
+    }
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         if(this.role == Roles.DIRETOR) return List.of(new SimpleGrantedAuthority("ROLE_ADMIN"), new SimpleGrantedAuthority("ROLE_USER"));
-        if(this.role == Roles.DIRETORA) return List.of(new SimpleGrantedAuthority("ROLE_ADMIN"), new SimpleGrantedAuthority("ROLE_USER"));
 
         else return List.of(new SimpleGrantedAuthority("ROLE_USER"));
     }
 
     @Override
     public String getPassword() {
-        return this.password;
+        return password;
     }
 
     @Override
     public String getUsername() {
-        return this.username;
+        return username;
     }
 
     @Override

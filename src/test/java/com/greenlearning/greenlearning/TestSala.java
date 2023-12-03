@@ -2,9 +2,11 @@ package com.greenlearning.greenlearning;
 
 import com.greenLearning.greenlearning.controller.SalaController;
 import com.greenLearning.greenlearning.dto.SalaDTO;
+import com.greenLearning.greenlearning.entity.Aluno;
 import com.greenLearning.greenlearning.entity.Professor;
 import com.greenLearning.greenlearning.entity.Sala;
 import com.greenLearning.greenlearning.entity.UserEntity;
+import com.greenLearning.greenlearning.entity.enuns.Roles;
 import com.greenLearning.greenlearning.repository.SalaRepository;
 import com.greenLearning.greenlearning.service.SalaService;
 import org.junit.jupiter.api.Assertions;
@@ -17,9 +19,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.HttpStatus;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 import static org.mockito.Mockito.when;
 
@@ -38,11 +38,14 @@ class TestSala {
     @BeforeEach
     void injectData(){
 
-        UserEntity userEntity = new UserEntity(1L,"pedrohenrique2023@gmail.com","123");
-        Professor professor = new Professor(1L, userEntity,"1 A");
+        UserEntity userEntity = new UserEntity(1L, "pedrohenrique2023@gmail.com", "123", Roles.PROFESSOR);
+        Professor professor = new Professor(1L,"1 A", userEntity);
+        Aluno aluno = new Aluno(1L,"Pedro Henrique",2);
+        Set<Aluno> alunos = new HashSet<>();
+        alunos.add(aluno);
 
         //BANCO DE DADOS
-        Sala sala = new Sala(1L,"1 A",professor);
+        Sala sala = new Sala(1L,"1 A",true,professor,alunos);
 
         //INSERÇÃO MANUAL PARA TESTAR CADASTRAR
         when(repository.save(Mockito.any(Sala.class))).thenAnswer(invocation -> {
@@ -62,7 +65,7 @@ class TestSala {
         when(repository.findAll()).thenReturn(salas);
 
         //TESTAR ATUALIZAR
-        Sala salaNova = new Sala(1L,"1 B",professor);
+        Sala salaNova = new Sala(1L,"1 B",true,professor,alunos);
         when(repository.save(salaNova)).thenReturn(salas.get(0));
     }
 
@@ -70,10 +73,13 @@ class TestSala {
     @DisplayName("Cadastrou sala com sucesso!")
     void salvarTeste(){
 
-        UserEntity userEntity = new UserEntity(1L,"pedrohenrique2023@gmail.com","123");
-        Professor professor = new Professor(1L, userEntity,"1 A");
+        UserEntity userEntity = new UserEntity(1L, "pedrohenrique2023@gmail.com", "123", Roles.PROFESSOR);
+        Professor professor = new Professor(1L,"1 A", userEntity);
+        Aluno aluno = new Aluno(1L,"Pedro Henrique",2);
+        Set<Aluno> alunos = new HashSet<>();
+        alunos.add(aluno);
 
-        var sala = controller.cadastrar(new SalaDTO(1L,"1 A",professor));
+        var sala = controller.cadastrar(new SalaDTO(1L,"1 A",true,professor,alunos));
 
         Assertions.assertEquals(1L,sala.getBody().getId());
         Assertions.assertEquals(HttpStatus.CREATED,sala.getStatusCode());
@@ -105,13 +111,16 @@ class TestSala {
     @DisplayName("Editou o sala com sucesso!")
     void atualizarTeste(){
 
-        UserEntity userEntity = new UserEntity(1L,"pedrohenrique2023@gmail.com","123");
-        Professor professor = new Professor(1L, userEntity,"1 A");
+        UserEntity userEntity = new UserEntity(1L, "pedrohenrique2023@gmail.com", "123", Roles.PROFESSOR);
+        Professor professor = new Professor(1L,"1 A", userEntity);
+        Aluno aluno = new Aluno(1L,"Pedro Henrique",2);
+        Set<Aluno> alunos = new HashSet<>();
+        alunos.add(aluno);
 
         //BANCO DE DADOS
-        SalaDTO salaDTO = new SalaDTO(1L,"1 B",professor);
+        SalaDTO salaDTO = new SalaDTO(1L,"1 B",true,professor,alunos);
 
-        var professorNovo = controller.editar(salaDTO.getId(),salaDTO);
+        var professorNovo = controller.editar(salaDTO.id(),salaDTO);
 
         Assertions.assertEquals(HttpStatus.OK,professorNovo.getStatusCode());
         Assertions.assertEquals("1 B", professorNovo.getBody().getNome());

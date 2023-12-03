@@ -3,6 +3,7 @@ package com.greenlearning.greenlearning;
 import com.greenLearning.greenlearning.controller.PontosController;
 import com.greenLearning.greenlearning.dto.PontosDTO;
 import com.greenLearning.greenlearning.entity.*;
+import com.greenLearning.greenlearning.entity.enuns.Roles;
 import com.greenLearning.greenlearning.repository.PontosRepository;
 import com.greenLearning.greenlearning.service.PontosService;
 import org.junit.jupiter.api.Assertions;
@@ -15,9 +16,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.HttpStatus;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 import static org.mockito.Mockito.when;
 
@@ -36,10 +35,12 @@ class TestPontos {
     @BeforeEach
     void injectData(){
 
-        UserEntity userEntity = new UserEntity(1L,"pedrohenrique2023@gmail.com","123");
-        Professor professor = new Professor(1L, userEntity,"1 A");
-        Sala sala = new Sala(1L,"1 A",professor);
-        Aluno aluno = new Aluno(1L,"Pedro Henrique",2,sala);
+        UserEntity userEntity = new UserEntity(1L, "pedrohenrique2023@gmail.com", "123", Roles.PROFESSOR);
+        Professor professor = new Professor(1L,"1 A", userEntity);
+        Aluno aluno = new Aluno(1L,"Pedro Henrique",2);
+        Set<Aluno> alunos = new HashSet<>();
+        alunos.add(aluno);
+        Sala sala = new Sala(1L,"1 A",true,professor, alunos);
 
         //BANCO DE DADOS
         Pontos pontuacao = new Pontos(1L,aluno,"JOGA O LIXO NA LATA",1000,true);
@@ -70,10 +71,12 @@ class TestPontos {
     @DisplayName("Cadastrou pontuacao com sucesso!")
     void salvarTeste(){
 
-        UserEntity userEntity = new UserEntity(1L,"pedrohenrique2023@gmail.com","123");
-        Professor professor = new Professor(1L, userEntity,"1 A");
-        Sala sala = new Sala(1L,"1 A",professor);
-        Aluno aluno = new Aluno(1L,"Pedro Henrique",2,sala);
+        UserEntity userEntity = new UserEntity(1L, "pedrohenrique2023@gmail.com", "123", Roles.PROFESSOR);
+        Professor professor = new Professor(1L,"1 A", userEntity);;
+        Aluno aluno = new Aluno(1L,"Pedro Henrique",2);
+        Set<Aluno> alunos = new HashSet<>();
+        alunos.add(aluno);
+        Sala sala = new Sala(1L,"1 A",true,professor, alunos);
 
         var pontos = controller.cadastrar(new PontosDTO(1L,aluno,"JOGA O LIXO NA LATA",1000,true));
 
@@ -107,14 +110,16 @@ class TestPontos {
     @DisplayName("Editou a pontuacao com sucesso!")
     void atualizarTeste(){
 
-        UserEntity userEntity = new UserEntity(1L,"pedrohenrique2023@gmail.com","123");
-        Professor professor = new Professor(1L, userEntity,"1 A");
-        Sala sala = new Sala(1L,"1 A",professor);
-        Aluno aluno = new Aluno(1L,"Pedro Henrique",2,sala);
+        UserEntity userEntity = new UserEntity(1L, "pedrohenrique2023@gmail.com", "123", Roles.PROFESSOR);
+        Professor professor = new Professor(1L,"1 A", userEntity);
+        Aluno aluno = new Aluno(1L,"Pedro Henrique",2);
+        Set<Aluno> alunos = new HashSet<>();
+        alunos.add(aluno);
+        Sala sala = new Sala(1L,"1 A",true,professor, alunos);
 
         PontosDTO pontosDTO = new PontosDTO(1L,aluno,"JOGA O LIXO NA LATA",2000,true);
 
-        var pontos = controller.editar(pontosDTO.getId(),pontosDTO);
+        var pontos = controller.editar(pontosDTO.id(),pontosDTO);
 
         Assertions.assertEquals(HttpStatus.OK,pontos.getStatusCode());
         Assertions.assertEquals(2000, pontos.getBody().getScore());

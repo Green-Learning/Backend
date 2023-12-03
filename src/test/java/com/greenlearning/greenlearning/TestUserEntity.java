@@ -3,6 +3,7 @@ package com.greenlearning.greenlearning;
 import com.greenLearning.greenlearning.controller.UserController;
 import com.greenLearning.greenlearning.dto.UserEntityDTO;
 import com.greenLearning.greenlearning.entity.UserEntity;
+import com.greenLearning.greenlearning.entity.enuns.Roles;
 import com.greenLearning.greenlearning.repository.UserRepository;
 import com.greenLearning.greenlearning.service.UserService;
 import org.junit.jupiter.api.Assertions;
@@ -37,7 +38,7 @@ class TestUserEntity {
     void injectData(){
 
         //BANCO DE DADOS
-        UserEntity userEntity = new UserEntity(1L,"pedrohenrique2023@gmail.com","123");
+        UserEntity userEntity = new UserEntity(1L, "pedrohenrique2023@gmail.com", "123", Roles.PROFESSOR);
 
         //INSERÇÃO MANUAL PARA TESTAR CADASTRAR
         when(repository.save(Mockito.any(UserEntity.class))).thenAnswer(invocation -> {
@@ -57,7 +58,7 @@ class TestUserEntity {
         when(repository.findAll()).thenReturn(userEntities);
 
         //TESTAR ATUALIZAR
-        UserEntity userEntityNovo = new UserEntity(1L,"pedrohenrique2023@gmail.com","123456789");
+        UserEntity userEntityNovo = new UserEntity(1L, "pedrohenrique2023@gmail.com", "123456789", Roles.PROFESSOR);
         when(repository.save(userEntityNovo)).thenReturn(userEntities.get(0));
     }
 
@@ -65,7 +66,7 @@ class TestUserEntity {
     @DisplayName("Cadastrou user com sucesso!")
     void salvarTeste(){
 
-        var user = controller.cadastrar(new UserEntityDTO(1L,"pedrohenrique2023@gmail.com","123"));
+        var user = controller.cadastrar(new UserEntityDTO(1L, "pedrohenrique2023@gmail.com", Roles.PROFESSOR,""));
 
         Assertions.assertEquals(1L,user.getBody().getId());
         Assertions.assertEquals(HttpStatus.CREATED,user.getStatusCode());
@@ -89,7 +90,7 @@ class TestUserEntity {
         List<UserEntity> userEntities = user.getBody();
 
         Assertions.assertEquals(HttpStatus.OK, user.getStatusCode());
-        Assertions.assertEquals("pedrohenrique2023@gmail.com", userEntities.get(0).getEmail());
+        Assertions.assertEquals("pedrohenrique2023@gmail.com", userEntities.get(0).getUsername());
         Assertions.assertEquals(1, userEntities.size());
     }
 
@@ -97,12 +98,12 @@ class TestUserEntity {
     @DisplayName("Editou o user com sucesso!")
     void atualizarTeste(){
 
-        UserEntityDTO userEntityDTO = new UserEntityDTO(1L,"pedrohenrique2023@gmail.com","123456789");
+        UserEntityDTO userEntityDTO = new UserEntityDTO(1L, "pedro", Roles.PROFESSOR,"");
 
-        var professorNovo = controller.editar(userEntityDTO.getId(), userEntityDTO);
+        var professorNovo = controller.editar(userEntityDTO.id(), userEntityDTO);
 
         Assertions.assertEquals(HttpStatus.OK,professorNovo.getStatusCode());
-        Assertions.assertEquals("123456789", professorNovo.getBody().getSenha());
+        Assertions.assertEquals("pedro", professorNovo.getBody().getUsername());
 
     }
 }

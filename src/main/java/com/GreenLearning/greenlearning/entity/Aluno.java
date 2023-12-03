@@ -9,20 +9,17 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.io.Serializable;
-import java.util.UUID;
 
 @Entity
-@Table(name = "TB_ALUNO")
+@Table(name = "tb_aluno")
 @Getter @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class Aluno implements Serializable {
-    private static final long serialVersionUID = 1L;
+public class Aluno {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private UUID id;
+    private Long id;
 
     @Column
     @NotBlank(message = "Nome é um campo obrigatorio!")
@@ -31,10 +28,5 @@ public class Aluno implements Serializable {
 
     @Column
     @Min(value = 4, message = "Idade é um campo obrigatorio, e devem ter no mínimo 4 anos!")
-
     private Integer idade;
-
-    @ManyToOne
-    @JoinColumn(name = "sala_id")
-    private Sala sala;
 }

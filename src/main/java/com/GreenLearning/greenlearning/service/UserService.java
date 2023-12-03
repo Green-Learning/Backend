@@ -1,11 +1,16 @@
 package com.greenLearning.greenlearning.service;
 
+import com.greenLearning.greenlearning.config.security.TokenService;
+import com.greenLearning.greenlearning.dto.LoginDTO;
 import com.greenLearning.greenlearning.dto.UserEntityDTO;
 import com.greenLearning.greenlearning.entity.UserEntity;
 import com.greenLearning.greenlearning.repository.UserRepository;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -16,13 +21,18 @@ import org.webjars.NotFoundException;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.UUID;
 
 @Service
 public class UserService implements UserDetailsService {
 
     @Autowired
     UserRepository repository;
+
+    @Autowired
+    private AuthenticationManager authenticationManager;
+
+    @Autowired
+    private TokenService tokenService;
 
     @Transactional
     public UserEntity cadastrar(UserEntityDTO userEntityDTO){
@@ -33,7 +43,7 @@ public class UserService implements UserDetailsService {
         return repository.save(userEntity);
     }
 
-    public UserEntity buscarPorId(UUID id){
+    public UserEntity buscarPorId(Long id){
         Optional<UserEntity> user = repository.findById(id);
 
         if (user.isEmpty()){
@@ -52,21 +62,37 @@ public class UserService implements UserDetailsService {
     }
 
     @Transactional
-    public UserEntity editar(UUID id, UserEntityDTO userNovo){
+    public UserEntity editar(Long id, UserEntityDTO userNovo){
         UserEntity userEntity = this.buscarPorId(id);
 
         Assert.isTrue(userEntity !=null, "Não foi possivel localizar o usuario informado!");
 
         userEntity.setUsername(userNovo.username());
-        userEntity.setPassword(userNovo.password());
 
         return repository.save(userEntity);
     }
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        UserDetails userEntity = repository.findByUsername(username);
+        UserDetails userDetails = repository.findByUsername(username).orElseThrow();
 
-        return new User(userEntity.getUsername(),userEntity.getPassword(), true,true,true,true,userEntity.getAuthorities());
+        return new User(userDetails.getUsername(),userDetails.getPassword(),true,true,true,true,userDetails.getAuthorities());
+    }
+
+    public UserEntityDTO logar(LoginDTO loginDTO) {
+        authenticationManager.authenticate(
+                new UsernamePasswordAuthenticationToken(
+                        loginDTO.username(),
+                        loginDTO.password()
+                )
+        );
+
+        UserEntity user = repository.findByUsername(loginDTO.username()).orElseThrow();
+
+        var jwtToken = tokenService.generateToken(user);
+
+        UserEntityDTO userLogado = new UserEntityDTO(user.getId(),user.getUsername(),user.getRole(),jwtToken);
+
+        return userLogado;
     }
 }
