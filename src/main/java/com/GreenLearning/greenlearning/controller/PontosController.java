@@ -20,7 +20,7 @@ public class PontosController {
     @Autowired
     PontosService service;
 
-    @PostMapping
+    @PostMapping(value = "/finalizar")
     public ResponseEntity<Pontos> cadastrar(@Valid @RequestBody final PontosDTO pontosDTO){
         try {
             return ResponseEntity.status(HttpStatus.CREATED).body(service.cadastrar(pontosDTO));

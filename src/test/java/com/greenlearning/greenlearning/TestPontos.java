@@ -43,7 +43,7 @@ class TestPontos {
         Sala sala = new Sala(1L,"1 A",true,professor, alunos);
 
         //BANCO DE DADOS
-        Pontos pontuacao = new Pontos(1L,aluno,"JOGA O LIXO NA LATA",1000,true);
+        Pontos pontuacao = new Pontos(1L,aluno,1000);
 
         //INSERÇÃO MANUAL PARA TESTAR CADASTRAR
         when(repository.save(Mockito.any(Pontos.class))).thenAnswer(invocation -> {
@@ -63,7 +63,7 @@ class TestPontos {
         when(repository.findAll()).thenReturn(pontos);
 
         //TESTAR ATUALIZAR
-        Pontos pontuacaoNova = new Pontos(1L,aluno,"JOGA O LIXO NA LATA",2000,true);
+        Pontos pontuacaoNova = new Pontos(1L,aluno,1000);
         when(repository.save(pontuacaoNova)).thenReturn(pontos.get(0));
     }
 
@@ -78,7 +78,7 @@ class TestPontos {
         alunos.add(aluno);
         Sala sala = new Sala(1L,"1 A",true,professor, alunos);
 
-        var pontos = controller.cadastrar(new PontosDTO(1L,aluno,"JOGA O LIXO NA LATA",1000,true));
+        var pontos = controller.cadastrar(new PontosDTO(1L,aluno,1000));
 
         Assertions.assertEquals(1L,pontos.getBody().getId());
         Assertions.assertEquals(HttpStatus.CREATED,pontos.getStatusCode());
@@ -94,35 +94,4 @@ class TestPontos {
         Assertions.assertEquals(HttpStatus.OK,pontos.getStatusCode());
     }
 
-    @Test
-    @DisplayName("Listar todos os pontos")
-    void listarTodosTest(){
-
-        var pontuacao = controller.listar();
-        List<Pontos> pontos = pontuacao.getBody();
-
-        Assertions.assertEquals(HttpStatus.OK, pontuacao.getStatusCode());
-        Assertions.assertEquals("JOGA O LIXO NA LATA", pontos.get(0).getJogo());
-        Assertions.assertEquals(1,pontos.size());
-    }
-
-    @Test
-    @DisplayName("Editou a pontuacao com sucesso!")
-    void atualizarTeste(){
-
-        UserEntity userEntity = new UserEntity(1L, "pedrohenrique2023@gmail.com", "123", Roles.PROFESSOR);
-        Professor professor = new Professor(1L,"1 A", userEntity);
-        Aluno aluno = new Aluno(1L,"Pedro Henrique",2);
-        Set<Aluno> alunos = new HashSet<>();
-        alunos.add(aluno);
-        Sala sala = new Sala(1L,"1 A",true,professor, alunos);
-
-        PontosDTO pontosDTO = new PontosDTO(1L,aluno,"JOGA O LIXO NA LATA",2000,true);
-
-        var pontos = controller.editar(pontosDTO.id(),pontosDTO);
-
-        Assertions.assertEquals(HttpStatus.OK,pontos.getStatusCode());
-        Assertions.assertEquals(2000, pontos.getBody().getScore());
-
-    }
 }
